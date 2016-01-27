@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>ExpressiveExpressionTrees</id>
+    <version>1.0.0</version>
+    <authors>hannasm</authors>
+    <owners>hannasm</owners>
+  	<licenseUrl>https://github.com/hannasm/ExpressiveExpressionTreesDotNet/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/hannasm/ExpressiveExpressionTreesDotNet</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This is a library that simplifies creating / manipulating expression trees.</description>
+    <releaseNotes>
+    * 1.0.0 - this is the initial release of this project
+    </releaseNotes>
+    <copyright>Copyright 2016</copyright>
+  </metadata>
+  <files>
+    <file src="..\readme.md" target="" />
+  </files>
+</package>
+<!-- vim: set expandtab ts=2 sw=2:  -->
