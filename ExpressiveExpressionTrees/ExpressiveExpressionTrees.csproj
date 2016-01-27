@@ -61,6 +61,10 @@
     <Compile Include="ExpressionVisitor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Package.nuspec" />
+    <None Include="publishNuget.bat" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PreBuildEvent>call $(SolutionDir)\GenerateFromFunc.ps1.bat $(SolutionDir)
