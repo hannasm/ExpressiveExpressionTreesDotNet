@@ -1,11 +1,14 @@
 $newline = [Environment]::NewLine;
-$output = 'using System;' + $newline; 
-$output += 'using System.Linq.Expressions;' + $newline;
+$output = 'using global::System;' + $newline; 
+$output += 'using global::System.Linq.Expressions;' + $newline;
 $output += $newline;
 $newline = [Environment]::NewLine + '    ';
-$output += 'namespace ExpressiveExpressionTrees {' + $newline;
+$output += 'namespace ExpressiveExpressionTrees {' + [Environment]::NewLine;
+$output += '#if EXPRESSIVE_EXPRESSION_TREES_ASSEMBLY' + $newline;
+$output += 'public' + [Environment]::NewLine;
+$output += '#endif' + $newline;
 $newline = [Environment]::NewLine + '        ';
-$output += 'public partial class ExpressionGenerator {';
+$output += 'partial class ExpressionGenerator {';
 $fPrefix = $newline;
 foreach ($x in (1..16)) {
 	$output += $fPrefix;

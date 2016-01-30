@@ -1,14 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Text;
+﻿using global::System;
+using global::System.Collections.Generic;
+using global::System.Collections.ObjectModel;
+using global::System.Linq;
+using global::System.Linq.Expressions;
+using global::System.Reflection;
+using global::System.Text;
 
 namespace ExpressiveExpressionTrees
 {
-    public class ExpressionHasher : ExpressionVisitor
+#if EXPRESSIVE_EXPRESSION_TREES_ASSEMBLY
+    public
+#endif
+    class ExpressionHasher : ExpressionVisitor
     {
         #region internals
         private int _hashCode = 0;

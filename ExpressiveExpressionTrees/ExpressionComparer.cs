@@ -1,20 +1,23 @@
 ﻿// Copyright (c) Microsoft Corporation.  All rights reserved.
 // This source code is made available under the terms of the Microsoft Public License (MS-PL)
 
-using System;
-using System.Collections;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Text;
+using global::System;
+using global::System.Collections;
+using global::System.Collections.Concurrent;
+using global::System.Collections.Generic;
+using global::System.Collections.ObjectModel;
+using global::System.Linq;
+using global::System.Linq.Expressions;
+using global::System.Reflection;
+using global::System.Runtime.CompilerServices;
+using global::System.Text;
 
 namespace ExpressiveExpressionTrees
 {
-    public class ExpressionComparer
+#if EXPRESSIVE_EXPRESSION_TREES_ASSEMBLY
+    public
+#endif
+    class ExpressionComparer
     {
         public ExpressionComparer() { }
         public ExpressionComparer(Func<object,object,bool> fnCompare) {
@@ -51,7 +54,11 @@ namespace ExpressiveExpressionTrees
     /// <summary>
     /// Compare two expressions to determine if they are equivalent
     /// </summary>
-    public class ExpressionComparerVisitor
+
+#if EXPRESSIVE_EXPRESSION_TREES_ASSEMBLY
+    public
+#endif
+    class ExpressionComparerVisitor
     {
         Dictionary<ParameterExpression, ParameterExpression> parameterScope;
         Func<object, object, bool> fnCompare;

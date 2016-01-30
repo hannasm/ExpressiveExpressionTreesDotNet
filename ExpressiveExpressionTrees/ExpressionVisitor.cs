@@ -1,16 +1,19 @@
 ﻿// Copyright (c) Microsoft Corporation.  All rights reserved.
 // This source code is made available under the terms of the Microsoft Public License (MS-PL)
 
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq.Expressions;
-using System.Reflection;
-using System.Runtime.CompilerServices;
+using global::System;
+using global::System.Collections.Generic;
+using global::System.Collections.ObjectModel;
+using global::System.Linq.Expressions;
+using global::System.Reflection;
+using global::System.Runtime.CompilerServices;
 
 namespace ExpressiveExpressionTrees 
 {
-    public abstract class ExpressionVisitor
+#if EXPRESSIVE_EXPRESSION_TREES_ASSEMBLY
+    public
+#endif
+    abstract class ExpressionVisitor
     {
         protected ExpressionVisitor()
         {

@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{159A6A75-481C-41D9-B142-EE8870E2F744}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		BumpVersionInstructions.md = BumpVersionInstructions.md
 		GenerateFromAction.ps1 = GenerateFromAction.ps1
 		GenerateFromAction.ps1.bat = GenerateFromAction.ps1.bat
 		GenerateFromFunc.ps1 = GenerateFromFunc.ps1

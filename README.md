@@ -1,8 +1,11 @@
 # Versioning
-This is version 1.0.0 of the Expressive Expression Tree library.
+This is version 1.1.0 of the Expressive Expression Tree library.
 
-This package is available on nuget at: https://www.nuget.org/packages/ExpressiveExpressionTrees/1.0.0
-The source for this package is available on github at: https://github.com/hannasm/ExpressiveExpressionTreesDotNet/releases/tag/1.0.0
+This package is available on nuget at: https://www.nuget.org/packages/ExpressiveExpressionTrees/1.1.0
+
+This package is also available from nuget as an embeddable sources package at: https://www.nuget.org/packages/ExpressiveExpressionTrees.Sources/1.1.0
+
+The source for this package is available on github at: https://github.com/hannasm/ExpressiveExpressionTreesDotNet/releases/tag/1.1.0
 
 # ExpressiveExpressionTreesDotNet
 This is a library that simplifies creating / manipulating expression trees. This includes various expression tree related utilities
@@ -47,3 +50,10 @@ The ExpresisonHasher and ExpressionComparer are useful in a number of different 
 be stored inside of a dictionary / hashtable data structure as a key. The hasher / comparer are based on field level
 equality, and not reference equality, meaning that two distinct instances of an expression tree composed of the exact same expression
 will be treated as equal.
+
+# Changelog
+
+## 1.1.0 
+  * Added ConvertExpressions() / Split() / Join() / MultiProject() helpers
+  * This is the first release that is also available as a Sources package on nuget
+  * This version imports the Sources nuget package of ExpressiveReflection
