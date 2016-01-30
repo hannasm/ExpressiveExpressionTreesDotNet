@@ -1,6 +1,6 @@
 ﻿remove-item ExpressiveExpressionTrees*.nupkg
 
-msbuild ./ExpressiveExpressionTrees.csproj /p:Configuration=Release
+msbuild ../ExpressiveExpressionTrees.sln /p:Configuration=Release
 
 nuget pack 'Package.nuspec' -Symbol -Prop Configuration=Release
 

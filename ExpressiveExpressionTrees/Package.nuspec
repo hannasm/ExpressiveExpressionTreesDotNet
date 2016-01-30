@@ -2,7 +2,7 @@
 <package >
   <metadata>
     <id>ExpressiveExpressionTrees</id>
-    <version>1.0.0</version>
+    <version>1.1.0</version>
     <authors>hannasm</authors>
     <owners>hannasm</owners>
   	<licenseUrl>https://github.com/hannasm/ExpressiveExpressionTreesDotNet/blob/master/LICENSE</licenseUrl>
@@ -10,7 +10,9 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>This is a library that simplifies creating / manipulating expression trees.</description>
     <releaseNotes>
-    * 1.0.0 - this is the initial release of this project
+      * 1.1.0 - Added ConvertExpressions() / Split() / Join() / MultiProject() helpers
+      * 1.1.0 - This is the first release that is also available as a Sources package on nuget
+      * 1.1.0 - This version imports the Sources nuget package of ExpressiveReflection
     </releaseNotes>
     <copyright>Copyright 2016</copyright>
   </metadata>
