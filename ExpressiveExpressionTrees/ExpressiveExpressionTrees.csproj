@@ -53,14 +53,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App_Packages\ExpressiveReflection.Sources.1.2.3\APIEquivalenceComparison.cs" />
-    <Compile Include="App_Packages\ExpressiveReflection.Sources.1.2.3\ConstructorReflection.cs" />
-    <Compile Include="App_Packages\ExpressiveReflection.Sources.1.2.3\Extensions\ExpressiveReflectionExtensions.cs" />
-    <Compile Include="App_Packages\ExpressiveReflection.Sources.1.2.3\InvalidExpressionException.cs" />
-    <Compile Include="App_Packages\ExpressiveReflection.Sources.1.2.3\MemberReflection.cs" />
-    <Compile Include="App_Packages\ExpressiveReflection.Sources.1.2.3\MethodReflection.cs" />
-    <Compile Include="App_Packages\ExpressiveReflection.Sources.1.2.3\Reflection.cs" />
-    <Compile Include="App_Packages\ExpressiveReflection.Sources.1.2.3\TypeReflection.cs" />
     <Compile Include="ExpressionComparer.cs" />
     <Compile Include="ExpressionFinder.cs" />
     <Compile Include="ExpressionGenerator.cs" />
@@ -71,6 +63,14 @@
     <Compile Include="ExpressionReader.cs" />
     <Compile Include="ExpressionReplacer.cs" />
     <Compile Include="ExpressionVisitor.cs" />
+    <Compile Include="lib\ExpressiveReflection.Sources.1.2.5\APIEquivalenceComparison.cs" />
+    <Compile Include="lib\ExpressiveReflection.Sources.1.2.5\ConstructorReflection.cs" />
+    <Compile Include="lib\ExpressiveReflection.Sources.1.2.5\Extensions\ExpressiveReflectionExtensions.cs" />
+    <Compile Include="lib\ExpressiveReflection.Sources.1.2.5\InvalidExpressionException.cs" />
+    <Compile Include="lib\ExpressiveReflection.Sources.1.2.5\MemberReflection.cs" />
+    <Compile Include="lib\ExpressiveReflection.Sources.1.2.5\MethodReflection.cs" />
+    <Compile Include="lib\ExpressiveReflection.Sources.1.2.5\Reflection.cs" />
+    <Compile Include="lib\ExpressiveReflection.Sources.1.2.5\TypeReflection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

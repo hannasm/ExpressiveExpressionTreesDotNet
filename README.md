@@ -55,5 +55,9 @@ will be treated as equal.
 
 ## 1.1.0 
   * Added ConvertExpressions() / Split() / Join() / MultiProject() helpers
+  * Add helpers for MakeBinary() / etc...
   * This is the first release that is also available as a Sources package on nuget
   * This version imports the Sources nuget package of ExpressiveReflection
+
+ ## 1.0.0
+   * Initial release

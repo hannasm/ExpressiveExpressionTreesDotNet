@@ -17,7 +17,7 @@ namespace ExpressiveExpressionTrees
             return WithType<bool>(Expression.Equal(converted.Left, converted.Right));
         }
 
-        public Expression<Func<bool>> MakeNotEqualComparison<T1, T2>(Expression<Func<T1>> left, Expression<Func<T2>> right)
+        public Expression<Func<bool>> MakeInequalityComparison<T1, T2>(Expression<Func<T1>> left, Expression<Func<T2>> right)
         {
             var converted = ConvertExpressions(left, right);
             return WithType<bool>(Expression.NotEqual(converted.Left, converted.Right));
@@ -47,22 +47,22 @@ namespace ExpressiveExpressionTrees
             return WithType<bool>(Expression.LessThanOrEqual(converted.Left, converted.Right));
         }
 
-        public Expression MakeAnd<T1, T2>(Expression<Func<T1>> left, Expression<Func<T2>> right)
+        public Expression MakeAndAlso<T1, T2>(Expression<Func<T1>> left, Expression<Func<T2>> right)
         {
             var converted = ConvertExpressions(left, right);
-            return WithType<bool>(Expression.And(converted.Left, converted.Right));
+            return Expression.AndAlso(converted.Left, converted.Right);
         }
 
-        public Expression MakeOr<T1, T2>(Expression<Func<T1>> left, Expression<Func<T2>> right)
+        public Expression MakeOrElse<T1, T2>(Expression<Func<T1>> left, Expression<Func<T2>> right)
         {
             var converted = ConvertExpressions(left, right);
-            return WithType<bool>(Expression.Or(converted.Left, converted.Right));
+            return Expression.OrElse(converted.Left, converted.Right);
         }
 
         public Expression MakeBinary<T1, T2>(Expression<Func<T1>> left, ExpressionType op, Expression<Func<T2>> right)
         {
             var converted = ConvertExpressions(left, right);
-            return WithType<bool>(Expression.MakeBinary(op, converted.Left, converted.Right));
+            return Expression.MakeBinary(op, converted.Left, converted.Right);
         }
     }
 }

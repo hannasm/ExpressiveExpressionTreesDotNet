@@ -4,7 +4,7 @@ using global::System.Linq;
 using global::System.Linq.Expressions;
 using global::System.Text;
 using global::System.Threading.Tasks;
-using ExpressiveExpressionTrees.App_Packages.ExpressiveReflection;
+using ExpressiveExpressionTrees.lib.ExpressiveReflection;
 
 namespace ExpressiveExpressionTrees
 {
@@ -43,15 +43,6 @@ namespace ExpressiveExpressionTrees
 
             public readonly Expression Left;
             public readonly Expression Right;
-        }
-        /// <summary>
-        /// Convert the type of two expressions to match if one is a nullable form of the other. It may be useful to detect and perform
-        /// other valid implicit casts here as well.
-        /// </summary>
-        public NullConvertedExpressionResult ConvertExpressions<T1>(ref Expression<Func<T1>> expression1, ref Expression<Func<T1>> expression2)
-        {
-            // if both expressions are the same type no conversion required
-            return new NullConvertedExpressionResult(expression1.Body, expression2.Body);
         }
 
         /// <summary>
@@ -150,7 +141,7 @@ namespace ExpressiveExpressionTrees
                     }
                     else
                     {
-                        result.Add(Expression.OrElse(pred, remainder));
+                        result.Add(Expression.MakeBinary(binarySeparator, remainder, pred));
                         remainder = null;
                     }
                 }

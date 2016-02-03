@@ -11,7 +11,7 @@ $data.package.metadata.description = 'This is a source only distribution of the 
 $data.package.metadata.id = $data.package.metadata.id + '.Sources';
 
 $project = [xml](Get-Content ExpressiveExpressionTrees.csproj)
-$rootFilePath = (Join-Path (join-path 'content' 'App_Packages') ($data.package.metadata.id + '.' + $version))
+$rootFilePath = (Join-Path (join-path 'content' 'lib') ($data.package.metadata.id + '.' + $version))
 $fileRef = $data.package.files.file | select -first 1;
 
 $toRemove = @();
@@ -21,8 +21,8 @@ foreach ($grp in $project.Project.ItemGroup) {
 		
 		# annotate source files with a comment indicating package version, as well as wrapping all code inside the namespace and rename extension to .pp
 		$text = [System.IO.File]::ReadAllText($compile.Include);
-		$text = '// Nuget source distribution of ' + $data.package.metadata.id + '.' + $versionString + [Environment]::NewLine +
-			    'namespace $rootnamespace$.App_Packages {' + [Environment]::NewLine + '  ' +
+		$text = '// Nuget source distribution of ' + $data.package.metadata.id + '.' + $version + [Environment]::NewLine +
+			    'namespace $rootnamespace$.lib {' + [Environment]::NewLine + '  ' +
 				$text.Replace(([Environment]::NewLine), ([Environment]::Newline + '  ')) +
 				'}';
 		[System.IO.File]::WriteAllText( ($compile.Include + '.pp'), $text);

@@ -1,5 +1,5 @@
-// Nuget source distribution of ExpressiveReflection.Sources.
-namespace ExpressiveExpressionTrees.App_Packages {
+// Nuget source distribution of ExpressiveReflection.Sources.1.2.5
+namespace ExpressiveExpressionTrees.lib {
   using global::System;
   using global::System.Collections.Generic;
   using global::System.Linq;
