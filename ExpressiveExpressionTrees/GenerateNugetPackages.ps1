@@ -14,6 +14,10 @@ $project = [xml](Get-Content ExpressiveExpressionTrees.csproj)
 $rootFilePath = (Join-Path (join-path 'content' 'lib') ($data.package.metadata.id + '.' + $version))
 $fileRef = $data.package.files.file | select -first 1;
 
+# we don't want dll in the sources distribution
+$fs = $data.package.files.file | where {$_.src -like '*dll' -or $_.src -like '*pdb' -or $_.src -like '*xml' }
+foreach ($f in $fs) { $data.package.files.RemoveChild($f); }
+
 $toRemove = @();
 foreach ($grp in $project.Project.ItemGroup) {
 	foreach ($compile in $grp.Compile) {

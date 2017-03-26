@@ -28,15 +28,17 @@ namespace ExpressiveExpressionTrees
         Dictionary<Expression, Expression> _replacements;
         Expression _target;
 
-        public Expression GetResult() {
+        public Expression GetResult()
+        {
+            if (_target == null) { throw new NullReferenceException("no target, perhaps you want ReplaceIn() instead"); }
             return ReplaceIn(_target);
         }
 
         public Expression ReplaceIn(Expression target)
         {
-            if (_target == null) { throw new ArgumentNullException("target"); }
+            if (target == null) { throw new ArgumentNullException("target"); }
             var visitor = new ExpressionReplacerVisitor(_replacements);
-            return visitor.Replace(_target);
+            return visitor.Replace(target);
         }
 
         public ExpressionReplacer When(Expression find, Expression replaceWith)

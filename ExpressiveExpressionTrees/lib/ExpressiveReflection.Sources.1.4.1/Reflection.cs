@@ -1,4 +1,4 @@
-// Nuget source distribution of ExpressiveReflection.Sources.1.2.5
+// Nuget source distribution of ExpressiveReflection.Sources.1.4.1
 namespace ExpressiveExpressionTrees.lib {
   using global::System;
   using global::System.Collections.Generic;
@@ -20,10 +20,15 @@ namespace ExpressiveExpressionTrees.lib {
           private static readonly MethodReflection _method = new MethodReflection();
           private static readonly TypeReflection _type = new TypeReflection();
           private static readonly APIEquivalenceComparison _APIComparison = new APIEquivalenceComparison();
+          static readonly CollectionReflection _collection = new CollectionReflection();
   
           public static ConstructorInfo GetConstructor<T>(Expression<Func<T>> constructorExpression)
           {
               return _constructor.From(constructorExpression);
+          }
+          public static ConstructorInfo Transmute(ConstructorInfo other, params Type[] newGenericArgs)
+          {
+              return _constructor.Transmute(other, newGenericArgs);
           }
           public static MemberInfo GetMember<T>(Expression<Func<T>> memberExpression)
           {
@@ -33,14 +38,41 @@ namespace ExpressiveExpressionTrees.lib {
           {
               return _member.NameOf(memberExpression);
           }
+          public static MemberInfo Transmute(MemberInfo member, params Type[] newGenericArgs)
+          {
+              return _member.Transmute(member, newGenericArgs);
+          }
   
+          public static MethodInfo Transmute(MethodInfo other, Type[] typeArgsForType, Type[] typeArgsForMethod)
+          {
+              return _method.Transmute(other, typeArgsForType, typeArgsForMethod);
+          }
           public static MethodInfo GetMethod<T>(Expression<Func<T>> methodExpression)
+          {
+              return _method.From(methodExpression);
+          }
+          public static MethodInfo GetMethod(Expression<Action> methodExpression)
           {
               return _method.From(methodExpression);
           }
           public static string GetMethodName<T>(Expression<Func<T>> methodExpression)
           {
               return _method.NameOf(methodExpression);
+          }
+          public static MethodInfo GetMethodExt(Type thisType, string name, params Type[] parameterTypes)
+          {
+              return _method.GetMethodExt(thisType, name, parameterTypes);
+          }
+          public static MethodInfo GetMethodExt(Type thisType, string name, BindingFlags bindingFlags, params Type[] parameterTypes)
+          {
+              return _method.GetMethodExt(thisType, name, bindingFlags, parameterTypes);
+          }
+          public static Type GenericT { get { return typeof(MethodReflection.T); } }
+          public static Type ArrayOfGenericT { get { return typeof(MethodReflection.T).MakeArrayType(1); } }
+  
+          public static Type Transmute(Type other, params Type[] newGenericArgs)
+          {
+              return _type.Transmute(other, newGenericArgs);
           }
           public static Type GetType<T>(Expression<Func<T>> typeExpression)
           {
@@ -64,7 +96,7 @@ namespace ExpressiveExpressionTrees.lib {
   
           public static bool IsNullAssignable(Type type)
           {
-              return _type.IsNullableType(type);
+              return _type.IsNullAssignable(type);
           }
   
           public static Type MadeNonNullable(Type type)
@@ -119,6 +151,11 @@ namespace ExpressiveExpressionTrees.lib {
           {
               _member.SetValue(member, instance, value, args);
           }
+  
+  
+          public static Type GetElementType(Type seqType) { return _collection.GetElementType(seqType); }
+          public static Type GetIEnumerableType(Type elementType) { return _collection.GetIEnumerableType(elementType); }
+          public static Type FindIEnumerable(Type seqType) { return _collection.FindIEnumerable(seqType); }
       }
   }
   }

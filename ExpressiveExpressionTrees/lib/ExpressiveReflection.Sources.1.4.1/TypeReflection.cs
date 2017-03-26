@@ -1,4 +1,4 @@
-// Nuget source distribution of ExpressiveReflection.Sources.1.2.5
+// Nuget source distribution of ExpressiveReflection.Sources.1.4.1
 namespace ExpressiveExpressionTrees.lib {
   using global::System;
   using global::System.Collections.Generic;
@@ -133,6 +133,23 @@ namespace ExpressiveExpressionTrees.lib {
                           return true;
                       }
                       return false;
+              }
+          }
+  
+          /// <summary>
+          /// Convert a Type from one generic type permutation to a different generic permutation. If the 
+          /// type passed in is not a generic type, or no typeargs are specified, the same type as was
+          /// passed in will be returned.
+          /// </summary>
+          public Type Transmute(Type target, params Type[] newtypeArgs)
+          {
+              if (target.IsGenericType && newtypeArgs != null && newtypeArgs.Length > 0)
+              {
+                  return target.GetGenericTypeDefinition().MakeGenericType(newtypeArgs);
+              }
+              else
+              {
+                  return target;
               }
           }
       }

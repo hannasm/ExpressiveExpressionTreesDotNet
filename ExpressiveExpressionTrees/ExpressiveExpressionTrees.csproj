@@ -63,21 +63,25 @@
     <Compile Include="ExpressionReader.cs" />
     <Compile Include="ExpressionReplacer.cs" />
     <Compile Include="ExpressionVisitor.cs" />
-    <Compile Include="lib\ExpressiveReflection.Sources.1.2.5\APIEquivalenceComparison.cs" />
-    <Compile Include="lib\ExpressiveReflection.Sources.1.2.5\ConstructorReflection.cs" />
-    <Compile Include="lib\ExpressiveReflection.Sources.1.2.5\Extensions\ExpressiveReflectionExtensions.cs" />
-    <Compile Include="lib\ExpressiveReflection.Sources.1.2.5\InvalidExpressionException.cs" />
-    <Compile Include="lib\ExpressiveReflection.Sources.1.2.5\MemberReflection.cs" />
-    <Compile Include="lib\ExpressiveReflection.Sources.1.2.5\MethodReflection.cs" />
-    <Compile Include="lib\ExpressiveReflection.Sources.1.2.5\Reflection.cs" />
-    <Compile Include="lib\ExpressiveReflection.Sources.1.2.5\TypeReflection.cs" />
+    <Compile Include="lib\ExpressiveReflection.Sources.1.4.1\APIEquivalenceComparison.cs" />
+    <Compile Include="lib\ExpressiveReflection.Sources.1.4.1\CollectionReflection.cs" />
+    <Compile Include="lib\ExpressiveReflection.Sources.1.4.1\ConstructorReflection.cs" />
+    <Compile Include="lib\ExpressiveReflection.Sources.1.4.1\Extensions\ExpressiveReflectionExtensions.cs" />
+    <Compile Include="lib\ExpressiveReflection.Sources.1.4.1\InvalidExpressionException.cs" />
+    <Compile Include="lib\ExpressiveReflection.Sources.1.4.1\MemberReflection.cs" />
+    <Compile Include="lib\ExpressiveReflection.Sources.1.4.1\MethodReflection.cs" />
+    <Compile Include="lib\ExpressiveReflection.Sources.1.4.1\MethodReflection.GetMethodExt.cs" />
+    <Compile Include="lib\ExpressiveReflection.Sources.1.4.1\Reflection.cs" />
+    <Compile Include="lib\ExpressiveReflection.Sources.1.4.1\TypeReflection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="GenerateNugetPackages.ps1" />
+    <None Include="LICENSE_ExpressiveReflection.md" />
     <None Include="Package.nuspec" />
     <None Include="packages.config" />
     <None Include="PublishNugetPackages.ps1" />
+    <None Include="README_ExpressiveReflection.md" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

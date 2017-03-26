@@ -109,6 +109,7 @@
     <Compile Include="ExpressionHasherTests\ParameterExpressionComparerTests.cs" />
     <Compile Include="ExpressionHasherTests\TypeBinaryExpressionComparerTests.cs" />
     <Compile Include="ExpressionHasherTests\UnaryExpressionComparerTests.cs" />
+    <Compile Include="ExpressionReplacerTests\ExpressionReplacerUseCases.cs" />
     <Compile Include="ExpressionVisitorTest\MemberInitVisitorTests.cs" />
     <Compile Include="CompareExpressionBaseTests\CompareMethodCallBaseTests.cs" />
     <Compile Include="CompareExpressionBaseTests\CompareNewArrayBaseTests.cs" />
@@ -145,6 +146,7 @@
       <Name>ExpressiveExpressionTrees</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

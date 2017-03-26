@@ -1,4 +1,4 @@
-// Nuget source distribution of ExpressiveReflection.Sources.1.2.5
+// Nuget source distribution of ExpressiveReflection.Sources.1.4.1
 namespace ExpressiveExpressionTrees.lib {
   using global::System;
   using global::System.Collections.Generic;
@@ -15,6 +15,21 @@ namespace ExpressiveExpressionTrees.lib {
   #endif
       class ConstructorReflection
       {
+          public ConstructorInfo Transmute(ConstructorInfo other, params Type[] newGenericArgs)
+          {
+              // you can't transmute a non-generic type's constructor because there are no generic arguments
+              // to change
+              if (!other.DeclaringType.IsGenericType)
+              {
+                  return other;
+              }
+  
+              
+              var type = other.DeclaringType.GetGenericTypeDefinition().MakeGenericType(newGenericArgs);
+              var transmuted = type.GetConstructors().Where(c => c.MetadataToken == other.MetadataToken && c.Module == other.Module).Single();
+              return transmuted;
+          }
+          
           public ConstructorInfo From<T>(Expression<Func<T>> constructorExpression)
           {
               if (constructorExpression == null) {
