@@ -1,11 +1,12 @@
 # Versioning
-This is version 1.1.2 of the Expressive Expression Tree library.
+This is version 2.0.0 of the Expressive Expression Tree library.
 
-This package is available on nuget at: https://www.nuget.org/packages/ExpressiveExpressionTrees/1.1.2
+This package is available on nuget at: https://www.nuget.org/packages/ExpressiveExpressionTrees/2.0.0
 
-This package is also available from nuget as an embeddable sources package at: https://www.nuget.org/packages/ExpressiveExpressionTrees.Sources/1.1.2
+The source for this package is available on github at: https://github.com/hannasm/ExpressiveExpressionTreesDotNet/releases/tag/2.0.0
 
-The source for this package is available on github at: https://github.com/hannasm/ExpressiveExpressionTreesDotNet/releases/tag/1.1.2
+## Source Packages
+The dotnet core releases to date do not support source code transformations, which was an essential feature for the source only distribution of this project. The source only distributions has been discontinued until this feature makes it back into the dotnet core featureset.
 
 # ExpressiveExpressionTreesDotNet
 This is a library that simplifies creating / manipulating expression trees. This includes various expression tree related utilities
@@ -51,18 +52,7 @@ be stored inside of a dictionary / hashtable data structure as a key. The hasher
 equality, and not reference equality, meaning that two distinct instances of an expression tree composed of the exact same expression
 will be treated as equal.
 
-# Changelog
-## 1.1.2
-  * 1.1.2 - Fix bug with ExpressionReplacer.PrepareSearch() / ExpressionReplacer.ReplaceIn() use case
+# Release Notes
 
-## 1.1.1
-  * Apparently the binary nuget packages didn't have a dll in them
-  
-## 1.1.0 
-  * Added ConvertExpressions() / Split() / Join() / MultiProject() helpers
-  * Add helpers for MakeBinary() / etc...
-  * This is the first release that is also available as a Sources package on nuget
-  * This version imports the Sources nuget package of ExpressiveReflection
+[For Release Notes See Here](ExpressiveExpressionTrees.ReleaseNotes.md)
 
- ## 1.0.0
-   * Initial release

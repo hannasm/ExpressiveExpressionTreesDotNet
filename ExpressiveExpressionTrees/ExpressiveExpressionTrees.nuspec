@@ -1,0 +1,36 @@
+﻿<?xml version="1.0"?>
+<package >
+<metadata>
+<id>ExpressiveReflection</id>
+<authors>hannasm</authors>
+<owners>hannasm</owners>
+<licenseUrl>https://github.com/hannasm/ExpressiveExpressionTreesDotNet/blob/master/LICENSE</licenseUrl>
+<projectUrl>https://github.com/hannasm/ExpressiveExpressionTreesDotNet</projectUrl>
+<requireLicenseAcceptance>false</requireLicenseAcceptance>
+<description>This is a source only distribution of the ExpressiveExpressionTrees library that can be embedded inside of other projects / libraries.</description>
+<copyright>Copyright 2016-2017</copyright>
+<version>
+2.0.0
+</version>
+<releaseNotes>
+* 2.0.0 - Updated nuget package to target .netstandard 2.0
+* 2.0.0 - The sources nuget packages have been removed because dotnet standard / nuget does not currently support the source transformations feature, which is necesarry for them to be implemented properly
+* 1.1.2 - Fix bug with ExpressionReplacer.PrepareSearch() / ExpressionReplacer.ReplaceIn() use case
+* 1.1.1 - Apparently the binary nuget packages didn't have a dll in them
+* 1.1.0 - Added ConvertExpressions() / Split() / Join() / MultiProject() helpers
+* 1.1.0 - This is the first release that is also available as a Sources package on nuget
+* 1.1.0 - This version imports the Sources nuget package of ExpressiveReflection
+</releaseNotes>
+<dependencies>
+<dependency id="ExpressiveReflection" version="[2.0,3.0)" />
+</dependencies>
+</metadata>
+<files>
+<file src="../readme.md" target="content/README_ExpressiveReflection.md" />
+<file src="../LICENSE.md" target="content/LICENSE_ExpressiveReflection.md" />
+<file src="bin/Release/netstandard2.0/*.dll" target="lib/netstandard2.0" />
+<file src="bin/Release/netstandard2.0/*.pdb" target="lib/netstandard2.0" />
+<file src="bin/Release/netstandard2.0/*.xml" target="lib/netstandard2.0" />
+</files>
+</package>
+<!-- vim: set expandtab ts=2 sw=2:  -->

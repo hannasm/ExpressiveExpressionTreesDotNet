@@ -1,98 +1,83 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{7C2F25AD-B298-46F0-AEFE-EF9A5A189DAA}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ExpressiveExpressionTrees</RootNamespace>
-    <AssemblyName>ExpressiveExpressionTrees</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <DefineConstants>$(DefineConstants);EXPRESSIVE_EXPRESSION_TREES_ASSEMBLY</DefineConstants>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;EXPRESSIVE_EXPRESSION_TREES_ASSEMBLY</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;EXPRESSIVE_EXPRESSION_TREES_ASSEMBLY</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Earlier|AnyCPU'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\Earlier\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>false</Prefer32Bit>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="ExpressionComparer.cs" />
-    <Compile Include="ExpressionFinder.cs" />
-    <Compile Include="ExpressionGenerator.cs" />
-    <Compile Include="ExpressionGenerator.FromAction.cs" />
-    <Compile Include="ExpressionGenerator.FromFunc.cs" />
-    <Compile Include="ExpressionGenerator.MakeBinary.cs" />
-    <Compile Include="ExpressionHasher.cs" />
-    <Compile Include="ExpressionReader.cs" />
-    <Compile Include="ExpressionReplacer.cs" />
-    <Compile Include="ExpressionVisitor.cs" />
-    <Compile Include="lib\ExpressiveReflection.Sources.1.4.1\APIEquivalenceComparison.cs" />
-    <Compile Include="lib\ExpressiveReflection.Sources.1.4.1\CollectionReflection.cs" />
-    <Compile Include="lib\ExpressiveReflection.Sources.1.4.1\ConstructorReflection.cs" />
-    <Compile Include="lib\ExpressiveReflection.Sources.1.4.1\Extensions\ExpressiveReflectionExtensions.cs" />
-    <Compile Include="lib\ExpressiveReflection.Sources.1.4.1\InvalidExpressionException.cs" />
-    <Compile Include="lib\ExpressiveReflection.Sources.1.4.1\MemberReflection.cs" />
-    <Compile Include="lib\ExpressiveReflection.Sources.1.4.1\MethodReflection.cs" />
-    <Compile Include="lib\ExpressiveReflection.Sources.1.4.1\MethodReflection.GetMethodExt.cs" />
-    <Compile Include="lib\ExpressiveReflection.Sources.1.4.1\Reflection.cs" />
-    <Compile Include="lib\ExpressiveReflection.Sources.1.4.1\TypeReflection.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="GenerateNugetPackages.ps1" />
-    <None Include="LICENSE_ExpressiveReflection.md" />
-    <None Include="Package.nuspec" />
-    <None Include="packages.config" />
-    <None Include="PublishNugetPackages.ps1" />
-    <None Include="README_ExpressiveReflection.md" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>call $(SolutionDir)\GenerateFromFunc.ps1.bat $(SolutionDir)
-call $(SolutionDir)\GenerateFromAction.ps1.bat $(SolutionDir)</PreBuildEvent>
+    <!-- We do not use the auto-generated nuspec files feature, instead see build task below -->
+    <NuspecFile>ExpressiveExpressionTrees.nuspec</NuspecFile>
   </PropertyGroup>
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
+  <PropertyGroup>
+    <!-- We do use the auto-generated assembly info, but version number is pulled in from GetProjectProps build task below -->
+    <AssemblyTitle>ExpressiveExpressionTrees</AssemblyTitle>
+    <AssemblyProduct>ExpressiveExpressionTrees</AssemblyProduct>
+    <Company>Resonance Development</Company>
+    <Description>Utility library providing functions and features for inspecting / analyzing / and manipulating Expression Trees.</Description>
+  </PropertyGroup>
+  <!-- load version number and populate properties needed for generating assemblyInfo and nuspec -->
+  <Target Name="GetProjectProps" BeforeTargets="GetAssemblyVersion">
+    <Message Text="... Compilation For Framework $(TargetFramework)" Importance="High" />
+    <Message Text="... Generating Assembly Version" Importance="High" />
+    <ReadLinesFromFile File="../ExpressiveExpressionTrees.VersionNumber.md">
+      <Output TaskParameter="Lines" ItemName="CommonVersion" />
+    </ReadLinesFromFile>
+    <PropertyGroup>
+      <Version>@(CommonVersion)</Version>
+      <FileVersion>@(CommonVersion)</FileVersion>
+      <AssemblyVersion>@(CommonVersion)</AssemblyVersion>
+    </PropertyGroup>
+    <Message Text="... Generated Assembly Version $(Version)" Importance="High" />
   </Target>
-  <Target Name="AfterBuild">
+  <Target Name="GeneratePPs" BeforeTargets="Build">
+    <Message Text="... Generating Nuspec $(NuspecFile)" Importance="High" />
+    <ReadLinesFromFile File="ExpressiveExpressionTrees.nuspec.header">
+      <Output TaskParameter="Lines" ItemName="NuspecHeader" />
+    </ReadLinesFromFile>
+    <ReadLinesFromFile File="ExpressiveExpressionTrees.nuspec.footer">
+      <Output TaskParameter="Lines" ItemName="NuspecFooter" />
+    </ReadLinesFromFile>
+    <ReadLinesFromFile File="../ExpressiveExpressionTrees.VersionNumber.md">
+      <Output TaskParameter="Lines" ItemName="CommonVersion" />
+    </ReadLinesFromFile>
+    <ReadLinesFromFile File="../ExpressiveExpressionTrees.CommonNugetProperties.xml">
+      <Output TaskParameter="Lines" ItemName="NuspecCommonProperties" />
+    </ReadLinesFromFile>
+    <ReadLinesFromFile File="../ExpressiveExpressionTrees.ReleaseNotes.md">
+      <Output TaskParameter="Lines" ItemName="CommonReleaseNotes" />
+    </ReadLinesFromFile>
+    <PropertyGroup>
+      <CommonReleaseNotesToEncode>@(CommonReleaseNotes->'%(Identity)', '%0a')</CommonReleaseNotesToEncode>
+      <CommonReleaseNotesEncoded>
+        $(CommonReleaseNotesToEncode.Replace('&amp;', '&amp;amp;').Replace('&lt;', '&amp;lt;').Replace('&gt;', '&amp;gt;'))
+      </CommonReleaseNotesEncoded>
+    </PropertyGroup>
+    <CreateProperty Value="&lt;version&gt;">
+      <Output TaskParameter="Value" PropertyName="NuspecVersionPrefix" />
+    </CreateProperty>
+    <CreateProperty Value="&lt;/version&gt;">
+      <Output TaskParameter="Value" PropertyName="NuspecVersionSuffix" />
+    </CreateProperty>
+    <CreateProperty Value="&lt;releaseNotes&gt;">
+      <Output TaskParameter="Value" PropertyName="NuspecReleaseNotesPrefix" />
+    </CreateProperty>
+    <CreateProperty Value="&lt;/releaseNotes&gt;">
+      <Output TaskParameter="Value" PropertyName="NuspecReleaseNotesSuffix" />
+    </CreateProperty>
+    <WriteLinesToFile File="ExpressiveExpressionTrees.nuspec" Lines="@(NuspecHeader)" Overwrite="true" Encoding="UTF-8" />
+    <WriteLinesToFile File="ExpressiveExpressionTrees.nuspec" Lines="@(NuspecCommonProperties)" Overwrite="false" Encoding="UTF-8" />
+    <WriteLinesToFile File="ExpressiveExpressionTrees.nuspec" Lines="$(NuspecVersionPrefix)" Overwrite="false" Encoding="UTF-8" />
+    <WriteLinesToFile File="ExpressiveExpressionTrees.nuspec" Lines="@(CommonVersion)" Overwrite="false" Encoding="UTF-8" />
+    <WriteLinesToFile File="ExpressiveExpressionTrees.nuspec" Lines="$(NuspecVersionSuffix)" Overwrite="false" Encoding="UTF-8" />
+    <WriteLinesToFile File="ExpressiveExpressionTrees.nuspec" Lines="$(NuspecReleaseNotesPrefix)" Overwrite="false" Encoding="UTF-8" />
+    <WriteLinesToFile File="ExpressiveExpressionTrees.nuspec" Lines="$(CommonReleaseNotesEncoded)" Overwrite="false" Encoding="UTF-8" />
+    <WriteLinesToFile File="ExpressiveExpressionTrees.nuspec" Lines="$(NuspecReleaseNotesSuffix)" Overwrite="false" Encoding="UTF-8" />
+    <WriteLinesToFile File="ExpressiveExpressionTrees.nuspec" Lines="@(NuspecFooter)" Overwrite="false" Encoding="UTF-8" />
+    <Message Text="... Generated Nuspec" Importance="High" />
   </Target>
-  -->
+  <ItemGroup>
+    <None Include="ExpressiveExpressionTrees.nuspec" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="ExpressiveReflection" Version="2.0.1" />
+  </ItemGroup>
 </Project>
