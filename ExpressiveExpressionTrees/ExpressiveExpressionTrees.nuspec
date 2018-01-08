@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <package >
 <metadata>
-<id>ExpressiveReflection</id>
+<id>ExpressiveExpressionTrees</id>
 <authors>hannasm</authors>
 <owners>hannasm</owners>
 <licenseUrl>https://github.com/hannasm/ExpressiveExpressionTreesDotNet/blob/master/LICENSE</licenseUrl>
@@ -26,8 +26,8 @@
 </dependencies>
 </metadata>
 <files>
-<file src="../readme.md" target="content/README_ExpressiveReflection.md" />
-<file src="../LICENSE.md" target="content/LICENSE_ExpressiveReflection.md" />
+<file src="../readme.md" target="content/README_ExpressiveExpressionTrees.md" />
+<file src="../LICENSE.md" target="content/LICENSE_ExpressiveExpressionTrees.md" />
 <file src="bin/Release/netstandard2.0/*.dll" target="lib/netstandard2.0" />
 <file src="bin/Release/netstandard2.0/*.pdb" target="lib/netstandard2.0" />
 <file src="bin/Release/netstandard2.0/*.xml" target="lib/netstandard2.0" />
