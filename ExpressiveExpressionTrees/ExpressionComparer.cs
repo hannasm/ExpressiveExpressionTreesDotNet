@@ -28,7 +28,7 @@ namespace ExpressiveExpressionTrees
             this._parameterScope = parameterScope;
         }
         protected Func<object, object, bool> _fnCompare;
-        protected Dictionary<ParameterExpression, ParameterExpression> _parameterScope;
+        protected IDictionary<ParameterExpression, ParameterExpression> _parameterScope;
 
         public bool AreEqual(Expression a, Expression b)
         {
@@ -40,12 +40,12 @@ namespace ExpressiveExpressionTrees
             return AreEqual(_parameterScope, a, b, fnCompare);
         }
 
-        public bool AreEqual(Dictionary<ParameterExpression, ParameterExpression> parameterScope, Expression a, Expression b)
+        public bool AreEqual(IDictionary<ParameterExpression, ParameterExpression> parameterScope, Expression a, Expression b)
         {
             return AreEqual(parameterScope, a, b, _fnCompare);
         }
 
-        public bool AreEqual(Dictionary<ParameterExpression, ParameterExpression> parameterScope, Expression a, Expression b, Func<object, object, bool> fnCompare)
+        public bool AreEqual(IDictionary<ParameterExpression, ParameterExpression> parameterScope, Expression a, Expression b, Func<object, object, bool> fnCompare)
         {
             return new ExpressionComparerVisitor(parameterScope, fnCompare).Compare(a, b);
         }
@@ -60,11 +60,11 @@ namespace ExpressiveExpressionTrees
 #endif
     class ExpressionComparerVisitor
     {
-        Dictionary<ParameterExpression, ParameterExpression> parameterScope;
+        IDictionary<ParameterExpression, ParameterExpression> parameterScope;
         Func<object, object, bool> fnCompare;
 
         public ExpressionComparerVisitor(
-            Dictionary<ParameterExpression, ParameterExpression> parameterScope,
+            IDictionary<ParameterExpression, ParameterExpression> parameterScope,
             Func<object, object, bool> fnCompare
             )
         {
