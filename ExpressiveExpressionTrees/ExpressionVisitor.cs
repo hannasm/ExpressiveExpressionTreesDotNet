@@ -1,14 +1,14 @@
-﻿// Copyright (c) Microsoft Corporation.  All rights reserved.
+// Copyright (c) Microsoft Corporation.  All rights reserved.
 // This source code is made available under the terms of the Microsoft Public License (MS-PL)
 
+using System.Linq;
 using global::System;
 using global::System.Collections.Generic;
 using global::System.Collections.ObjectModel;
 using global::System.Linq.Expressions;
 using global::System.Reflection;
-using global::System.Runtime.CompilerServices;
 
-namespace ExpressiveExpressionTrees 
+namespace ExpressiveExpressionTrees
 {
 #if EXPRESSIVE_EXPRESSION_TREES_ASSEMBLY
     public
@@ -120,11 +120,89 @@ namespace ExpressiveExpressionTrees
                     return this.VisitDefault((DefaultExpression)exp);
                 case ExpressionType.Block:
                     return this.VisitBlock((BlockExpression)exp);
+                case ExpressionType.Try:
+                    return this.VisitTry((TryExpression)exp);
+                case ExpressionType.Goto:
+                    return this.VisitGoto((GotoExpression)exp);
+                case ExpressionType.Label:
+                    return this.VisitLabel((LabelExpression)exp);
                 default:
                     return this.VisitUnknown(exp);
             }
         }
 
+        protected virtual Expression VisitLabel(LabelExpression exp) {
+            var ndev = this.Visit(exp.DefaultValue);
+
+            return this.UpdateLabel(exp, ndev);
+        }
+        protected LabelExpression UpdateLabel(LabelExpression exp, Expression newDefault) {
+            if (exp.DefaultValue == newDefault) { return exp; }
+
+            return Expression.Label(exp.Target, newDefault);
+        }
+
+        protected virtual Expression VisitGoto(GotoExpression exp) {
+            var nval = this.Visit(exp.Value);
+
+            return this.UpdateGotoExpression(exp, nval);
+        }
+        protected GotoExpression UpdateGotoExpression(GotoExpression exp, Expression newValue) {
+            if (exp.Value == newValue) { return exp; }
+
+            return Expression.Goto(exp.Target, newValue, exp.Type);
+        }
+        protected virtual Expression VisitTry(TryExpression exp) {
+            var body = this.Visit(exp.Body);
+            var cb = this.VisitCatchBlocks(exp.Handlers);
+            var fault = this.Visit(exp.Fault);
+            var fin = this.Visit(exp.Finally);
+
+            return this.UpdateTry(exp, body, cb, fault, fin);
+        }
+
+        private Expression UpdateTry(TryExpression exp, Expression body, IEnumerable<CatchBlock> cb, Expression fault, Expression fin) {
+            if (exp.Body == body && exp.Handlers == cb && exp.Fault == fault && exp.Finally == fin) { return exp; }
+
+            if (fault != null) { throw new NotImplementedException("TryExpressions with faults not currently supported."); }
+
+            if (cb != null) {
+                return Expression.TryCatchFinally(body, fin, cb.ToArray());
+            } else  {
+                return Expression.TryFinally(body, fin);
+            }
+        }
+        protected IEnumerable<CatchBlock> VisitCatchBlocks(ReadOnlyCollection<CatchBlock> cbs) {
+            List<CatchBlock> r2 = null;
+            for (int i = 0, n = cbs.Count; i < n ; i++) {
+                var cb = cbs[i];
+                var ncb = this.VisitCatchBlock(cb);
+
+                if (r2 != null) { r2.Add(ncb); }
+                else if (ncb != cb) {
+                    r2 = new List<CatchBlock>();
+                    for (int j =0 ; j< i; j++) {
+                        r2.Add(cbs[j]);
+                    }
+                    r2.Add(ncb);
+                }
+            }
+            if (r2 == null) { return cbs; }
+            else { return r2.AsReadOnly(); }
+        }
+
+        protected virtual CatchBlock VisitCatchBlock(CatchBlock cb) {
+            var ncbb = this.Visit(cb.Body);
+            var nflt = this.Visit(cb.Filter);
+            var nprm = (ParameterExpression)this.Visit(cb.Variable);
+
+            return this.UpdateCatchBlock(cb, ncbb, nflt, nprm);
+        }
+        protected CatchBlock UpdateCatchBlock(CatchBlock cb, Expression newbody, Expression newFilter, ParameterExpression newVar) {
+            if (cb.Body == newbody && cb.Filter == newFilter && cb.Variable == newVar) { return cb; }
+
+            return Expression.Catch(newVar, newbody);
+        }
         protected virtual Expression VisitTypeEqual(TypeBinaryExpression exp)
         {
             var result = this.Visit(exp.Expression);
@@ -176,7 +254,7 @@ namespace ExpressiveExpressionTrees
                     newExprs.Add(newExpr);
                 }
             }
-            
+
             return UpdateBlockExpression(blockExpression, exprs, vars);
         }
         protected virtual BlockExpression UpdateBlockExpression(BlockExpression exp, IEnumerable<Expression> expressions, IEnumerable<ParameterExpression> variables)

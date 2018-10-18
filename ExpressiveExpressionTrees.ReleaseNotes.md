@@ -1,4 +1,6 @@
-﻿      * 2.0.1 - Update ExpressionComparer to use IDictionary<,> instead of Dictionary<,> 
+      * 2.1.0 - adding support for try catch expressions
+      * 2.1.0 - adding support for goto expressions 
+      * 2.0.1 - Update ExpressionComparer to use IDictionary<,> instead of Dictionary<,> 
       * 2.0.0 - Updated nuget package to target .netstandard 2.0
       * 2.0.0 - The sources nuget packages have been removed because dotnet standard / nuget does not currently support the source transformations feature, which is necesarry for them to be implemented properly
       * 1.1.2 - Fix bug with ExpressionReplacer.PrepareSearch() / ExpressionReplacer.ReplaceIn() use case

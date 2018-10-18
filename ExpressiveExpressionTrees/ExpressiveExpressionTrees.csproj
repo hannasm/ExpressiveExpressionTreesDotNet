@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <DefineConstants>$(DefineConstants);EXPRESSIVE_EXPRESSION_TREES_ASSEMBLY</DefineConstants>
     <TargetFrameworks>netstandard2.0</TargetFrameworks>
@@ -30,14 +30,14 @@
   </Target>
   <Target Name="GeneratePPs" BeforeTargets="Build">
     <Message Text="... Generating Nuspec $(NuspecFile)" Importance="High" />
+    <ReadLinesFromFile File="../ExpressiveExpressionTrees.VersionNumber.md">
+      <Output TaskParameter="Lines" ItemName="CommonVersion" />
+    </ReadLinesFromFile>
     <ReadLinesFromFile File="ExpressiveExpressionTrees.nuspec.header">
       <Output TaskParameter="Lines" ItemName="NuspecHeader" />
     </ReadLinesFromFile>
     <ReadLinesFromFile File="ExpressiveExpressionTrees.nuspec.footer">
       <Output TaskParameter="Lines" ItemName="NuspecFooter" />
-    </ReadLinesFromFile>
-    <ReadLinesFromFile File="../ExpressiveExpressionTrees.VersionNumber.md">
-      <Output TaskParameter="Lines" ItemName="CommonVersion" />
     </ReadLinesFromFile>
     <ReadLinesFromFile File="../ExpressiveExpressionTrees.CommonNugetProperties.xml">
       <Output TaskParameter="Lines" ItemName="NuspecCommonProperties" />

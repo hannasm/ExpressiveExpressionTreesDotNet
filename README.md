@@ -1,9 +1,9 @@
 # Versioning
-This is version 2.0.1 of the Expressive Expression Tree library.
+This is version 2.1.0 of the Expressive Expression Tree library.
 
-This package is available on nuget at: https://www.nuget.org/packages/ExpressiveExpressionTrees/2.0.1
+This package is available on nuget at: https://www.nuget.org/packages/ExpressiveExpressionTrees/2.1.0
 
-The source for this package is available on github at: https://github.com/hannasm/ExpressiveExpressionTreesDotNet/releases/tag/2.0.1
+The source for this package is available on github at: https://github.com/hannasm/ExpressiveExpressionTreesDotNet/releases/tag/2.1.0
 
 ## Source Packages
 The dotnet core releases to date do not support source code transformations, which was an essential feature for the source only distribution of this project. The source only distributions has been discontinued until this feature makes it back into the dotnet core featureset.

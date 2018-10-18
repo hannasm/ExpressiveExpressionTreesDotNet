@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -726,7 +726,7 @@ namespace ExpressiveExpressionTrees.Tests
 
             Assert.AreEqual(el[2], conv(conv(conv(result).Left).Right).Left);
             Assert.AreEqual(el[3], conv(conv(conv(result).Left).Right).Right);
-            
+
             Assert.AreEqual(el[4], conv(result).Right);
         }
 
@@ -889,7 +889,7 @@ namespace ExpressiveExpressionTrees.Tests
         {
             var xgr = new ExpressionGenerator();
             Func<Expression, BinaryExpression> conv = x => (BinaryExpression)x;
-            
+
             var result = xgr.Join(null, ExpressionType.Add);
 
             Assert.IsNull(result);
@@ -944,6 +944,29 @@ namespace ExpressiveExpressionTrees.Tests
             Assert.AreEqual(ExpressionType.Add, result.Body.NodeType);
             Assert.AreEqual(el[0], conv(result.Body).Left);
             Assert.AreEqual(el[1], conv(result.Body).Right);
+        }
+        [TestMethod]
+        public void Test060() {
+            var xgr = new ExpressionGenerator();
+            int val = 10;
+            var p = xgr.Constant(val);
+
+            Assert.IsInstanceOfType(p.Body, typeof(ConstantExpression));
+            Assert.AreEqual(val, ((ConstantExpression)p.Body).Value);
+        }
+        [TestMethod]
+        public void Test061() {
+            var xgr = new ExpressionGenerator();
+            var p = xgr.Parameter<string>();
+
+            Assert.IsInstanceOfType(p.Body, typeof(ParameterExpression));
+        }
+        [TestMethod]
+        public void Test062() {
+            var xgr = new ExpressionGenerator();
+            var p = xgr.Parameter(default(string));
+
+            Assert.IsInstanceOfType(p.Body, typeof(ParameterExpression));
         }
     }
 }

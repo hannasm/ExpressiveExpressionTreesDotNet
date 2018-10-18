@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -10,26 +10,34 @@ namespace ExpressiveExpressionTrees.Tests.ExpressionVisitorTest
     public class ExpressionVisitorVerifierTool : ExpressionVisitor
     {
         public readonly List<Expression> Inputs = new List<Expression>();
-        public readonly List<Expression> Outputs = new List<Expression>(); 
+        public readonly List<Expression> Outputs = new List<Expression>();
         public Expression Result;
         public readonly Dictionary<int, Expression> PositionalReplacements;
-        public readonly Dictionary<Expression, Expression> ExpressionReplacements; 
+        public readonly Dictionary<Expression, Expression> ExpressionReplacements;
+        public readonly Dictionary<CatchBlock, CatchBlock> CatchBlockReplace = new Dictionary<CatchBlock,CatchBlock>();
+
+        public static ExpressionVisitorVerifierTool Create() {
+            return new ExpressionVisitorVerifierTool(null, null);
+        }
+        public Expression Execute(Expression exp) {
+            return this.Result = this.Visit(exp);
+        }
 
         public static ExpressionVisitorVerifierTool Test(Expression exp) {
             var visitor = new ExpressionVisitorVerifierTool(null, null);
-            visitor.Visit(exp);
+            visitor.Result = visitor.Visit(exp);
             return visitor;
         }
         public static ExpressionVisitorVerifierTool Test(Expression exp, Dictionary<int, Expression> replace)
         {
             var visitor = new ExpressionVisitorVerifierTool(replace, null);
-            visitor.Visit(exp);
+            visitor.Result = visitor.Visit(exp);
             return visitor;
         }
         public static ExpressionVisitorVerifierTool Test(Expression exp, Dictionary<Expression, Expression> replace)
         {
             var visitor = new ExpressionVisitorVerifierTool(null, replace);
-            visitor.Visit(exp);
+            visitor.Result = visitor.Visit(exp);
             return visitor;
         }
 
@@ -44,7 +52,7 @@ namespace ExpressiveExpressionTrees.Tests.ExpressionVisitorTest
         {
             int pos = Inputs.Count;
             Inputs.Add(exp);
-            
+
             Expression result;
             if (exp != null && ExpressionReplacements.TryGetValue(exp, out result)) {
                 PositionalReplacements.Add(pos, result);
@@ -63,6 +71,16 @@ namespace ExpressiveExpressionTrees.Tests.ExpressionVisitorTest
                 Outputs[pos] = result;
                 return result;
             }
+        }
+
+        protected override CatchBlock VisitCatchBlock(CatchBlock cb) {
+            var res = base.VisitCatchBlock(cb);
+
+            if (CatchBlockReplace.ContainsKey(cb)) {
+                return CatchBlockReplace[cb];
+            }
+
+            return res;
         }
 
         public void WasVisited(Expression exp)
@@ -117,7 +135,7 @@ namespace ExpressiveExpressionTrees.Tests.ExpressionVisitorTest
             WasVisited(of, 1);
 
             var pos = Inputs.Select((e,i)=>new { Element = e, Index = i }).Where(e=>e.Element == of).Select(e=>e.Index).Single();
-            
+
             Assert.IsTrue(has((T)Outputs[pos]), "Expected output at position " + pos + " to meet condition");
         }
 

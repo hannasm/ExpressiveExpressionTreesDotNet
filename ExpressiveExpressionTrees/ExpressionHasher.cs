@@ -1,4 +1,4 @@
-﻿using global::System;
+using global::System;
 using global::System.Collections.Generic;
 using global::System.Collections.ObjectModel;
 using global::System.Linq;
@@ -76,7 +76,7 @@ namespace ExpressiveExpressionTrees
                     // for lambda expressions we don't care about return type
                     // because sometimes we see custom delegate types
                     // with the exact same signature. Everything else will
-                    // be compatible, so it's just a matter of 
+                    // be compatible, so it's just a matter of
                     // ignoring this field
                     // if all the arguments match and the return type matches
                     // we are good to go
@@ -273,6 +273,38 @@ namespace ExpressiveExpressionTrees
         {
             return base.VisitInvocation(iv);
         }
+
+        protected override Expression VisitGoto(GotoExpression exp)
+        {
+            Accumulate(exp.Target);
+            Accumulate(exp.Kind);
+            return base.VisitGoto(exp);
+        }
+
+        protected void Accumulate(LabelTarget target) {
+            if (target != null) {
+                Accumulate(target.Name);
+                Accumulate(target.Type);
+            }
+        }
+        protected override Expression VisitLabel(LabelExpression exp) {
+            Accumulate(exp.Target);
+            return base.VisitLabel(exp);
+        }
+
+        protected override Expression VisitTry(TryExpression exp) {
+            return base.VisitTry(exp);
+        }
+
+        protected override CatchBlock VisitCatchBlock(CatchBlock cb) {
+            Accumulate(cb.Test);
+            return base.VisitCatchBlock(cb);
+        }
+
+        protected override Expression VisitBlock(BlockExpression blockExpression) {
+            return base.VisitBlock(blockExpression);
+        }
+
         #endregion
     }
 }

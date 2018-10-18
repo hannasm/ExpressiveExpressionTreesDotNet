@@ -1,4 +1,4 @@
-﻿using global::System;
+using global::System;
 using global::System.Collections.Generic;
 using global::System.Linq;
 using global::System.Linq.Expressions;
@@ -13,6 +13,15 @@ namespace ExpressiveExpressionTrees
 #endif
     partial class ExpressionGenerator
     {
+        public Expression<Func<T1>> Constant<T1>(T1 constant) {
+          return WithType<T1>(Expression.Constant(constant));
+        }
+        public Expression<Func<T1>> Parameter<T1>() {
+          return WithType<T1>(Expression.Parameter(typeof(T1)));
+        }
+        public Expression<Func<T1>> Parameter<T1>(T1 _) {
+          return WithType<T1>(Expression.Parameter(typeof(T1)));
+        }
         public Expression<Func<T1>> WithType<T1>(Expression expr)
         {
             return Expression.Lambda<Func<T1>>(
@@ -47,7 +56,7 @@ namespace ExpressiveExpressionTrees
 
         /// <summary>
         /// Convert the type of two expressions to match if one is a nullable form of the other's type. It may be useful to detect and perform
-        /// other implicit casts 
+        /// other implicit casts
         /// </summary>
         public NullConvertedExpressionResult ConvertExpressions<T1,T2>(Expression<Func<T1>>  expressionz1, Expression<Func<T2>>  expressionz2)
         {
@@ -107,8 +116,8 @@ namespace ExpressiveExpressionTrees
         /// <summary>
         /// Combine a sequence of expressions using a single binary operator.  At the cost of slightly slower performance,
         /// O(n*logn) instead of O(n),
-        /// this join operation creates a balanced tree over the result. 
-        /// 
+        /// this join operation creates a balanced tree over the result.
+        ///
         /// This tradeoff compared to the naiive unbalanced approachs, can prevent stack overflow issues ocurring during tree traversals
         /// at no more than several hundred elements.
         /// </summary>
@@ -120,8 +129,8 @@ namespace ExpressiveExpressionTrees
         /// <summary>
         /// Combine a sequence of expressions using a single binary operator.  At the cost of slightly slower performance,
         /// O(n*logn) instead of O(n),
-        /// this join operation creates a balanced tree over the result. 
-        /// 
+        /// this join operation creates a balanced tree over the result.
+        ///
         /// This tradeoff compared to the naiive unbalanced approachs, can prevent stack overflow issues ocurring during tree traversals
         /// at no more than several hundred elements.
         /// </summary>
@@ -161,7 +170,7 @@ namespace ExpressiveExpressionTrees
 
             return finalPredicate;
         }
-        
+
         /// <summary>
         /// Given a single IQueryable input sequence, perform two separate projections over that
         /// input (optionally performing separate complex type cocercion in the process), and then combine
@@ -229,7 +238,7 @@ namespace ExpressiveExpressionTrees
         }
 
         /// <summary>
-        /// Perform two separate coercions over a single input (optionally performing separate complex type cocercion in the process), 
+        /// Perform two separate coercions over a single input (optionally performing separate complex type cocercion in the process),
         /// and then combine  the result of those two separate coercions into a single result.
         /// </summary>
         public Expression<Func<T1,T2>> MultiProject<T1, T2, T3, T4, T5, T6>(

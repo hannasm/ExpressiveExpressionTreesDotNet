@@ -1,4 +1,4 @@
-﻿// Copyright (c) Microsoft Corporation.  All rights reserved.
+// Copyright (c) Microsoft Corporation.  All rights reserved.
 // This source code is made available under the terms of the Microsoft Public License (MS-PL)
 
 using global::System;
@@ -76,7 +76,7 @@ namespace ExpressiveExpressionTrees
         {
             get { return this.fnCompare; }
         }
-        
+
         public virtual bool Compare(Expression a, Expression b)
         {
             if (a == b)
@@ -91,7 +91,7 @@ namespace ExpressiveExpressionTrees
                     // for lambda expressions we don't care about return type
                     // because sometimes we see custom delegate types
                     // with the exact same signature. Everything else will
-                    // be compatible, so it's just a matter of 
+                    // be compatible, so it's just a matter of
                     // ignoring this field
                     // if all the arguments match and the return type matches
                     // we are good to go
@@ -172,10 +172,16 @@ namespace ExpressiveExpressionTrees
                     return this.CompareListInit((ListInitExpression)a, (ListInitExpression)b);
                 case ExpressionType.Default:
                     return this.CompareDefault((DefaultExpression)a, (DefaultExpression)b);
+                case ExpressionType.Try:
+                    return this.CompareTry((TryExpression)a, (TryExpression)b);
+                case ExpressionType.Goto:
+                    return this.CompareGoto((GotoExpression)a, (GotoExpression)b);
+                case ExpressionType.Label:
+                    return this.CompareLabel((LabelExpression)a, (LabelExpression)b);
+                case ExpressionType.Block:
+                    return this.CompareBlock((BlockExpression)a, (BlockExpression)b);
 
                 case ExpressionType.Assign:
-                    goto default;
-                case ExpressionType.Block:
                     goto default;
                 case ExpressionType.DebugInfo:
                     goto default;
@@ -183,11 +189,7 @@ namespace ExpressiveExpressionTrees
                     goto default;
                 case ExpressionType.Extension:
                     goto default;
-                case ExpressionType.Goto:
-                    goto default;
                 case ExpressionType.Index:
-                    goto default;
-                case ExpressionType.Label:
                     goto default;
                 case ExpressionType.RuntimeVariables:
                     goto default;
@@ -196,8 +198,6 @@ namespace ExpressiveExpressionTrees
                 case ExpressionType.Switch:
                     goto default;
                 case ExpressionType.Throw:
-                    goto default;
-                case ExpressionType.Try:
                     goto default;
                 case ExpressionType.AddAssign:
                 case ExpressionType.AndAssign:
@@ -223,6 +223,75 @@ namespace ExpressiveExpressionTrees
                     throw new Exception(string.Format("Unhandled expression type: '{0}'", a.NodeType));
             }
         }
+
+        protected virtual bool CompareBlock(BlockExpression a, BlockExpression b) {
+            return this.CompareExpressionList(a.Expressions, b.Expressions) &&
+                    this.Compare(a.Result, b.Result) &&
+                    this.CompareParameterList(a.Variables, b.Variables);
+        }
+        protected virtual bool CompareParameterList(ReadOnlyCollection<ParameterExpression> a, ReadOnlyCollection<ParameterExpression> b)
+        {
+            if (a == b)
+                return true;
+            if (a == null || b == null)
+                return false;
+            if (a.Count != b.Count)
+                return false;
+            for (int i = 0, n = a.Count; i < n; i++)
+            {
+                if (!this.Compare(a[i], b[i]))
+                    return false;
+            }
+            return true;
+        }
+
+        protected virtual bool CompareLabel(LabelExpression a, LabelExpression b) {
+            return this.Compare(a.DefaultValue, b.DefaultValue) &&
+                    this.CompareLabelTarget(a.Target, b.Target);
+        }
+        protected virtual bool CompareGoto(GotoExpression a, GotoExpression b) {
+            return a.Kind == b.Kind &&
+                   this.CompareLabelTarget(a.Target, b.Target) &&
+                   this.Compare(a.Value, b.Value);
+        }
+
+        protected virtual bool CompareLabelTarget(LabelTarget a, LabelTarget b) {
+            return a.Name == b.Name && a.Type == b.Type;
+        }
+
+        protected virtual bool CompareTry(TryExpression a, TryExpression b) {
+            return this.Compare(a.Fault, b.Fault) &&
+                    this.Compare(a.Finally, b.Finally) &&
+                    this.Compare(a.Body, b.Body) &&
+                    this.CompareCatchBlocks(a.Handlers, b.Handlers);
+        }
+
+        protected virtual bool CompareCatchBlocks(ReadOnlyCollection<CatchBlock> a, ReadOnlyCollection<CatchBlock> b)
+        {
+            if (a == null || b == null) { return a == b; }
+            if (a.Count != b.Count) { return false; }
+            for (int i = 0, n = a.Count; i < n; i++) {
+                if (!this.CompareCatchBlock(a[i], b[i])) {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        protected virtual bool CompareCatchBlock(CatchBlock a, CatchBlock b) {
+            if (a.Variable != null && b.Variable != null) {
+                if (a.Variable.Type != b.Variable.Type) { return false; }
+                this.parameterScope.Add(a.Variable, b.Variable);
+            }
+
+            return a.Test == b.Test &&
+                   this.Compare(a.Body, b.Body) &&
+                   this.Compare(a.Filter, b.Filter) &&
+                   this.Compare(a.Variable, b.Variable);
+        }
+
+
+
 
         private bool CompareDefault(DefaultExpression a, DefaultExpression b)
         {
@@ -258,7 +327,7 @@ namespace ExpressiveExpressionTrees
                 && this.Compare(a.IfTrue, b.IfTrue)
                 && this.Compare(a.IfFalse, b.IfFalse);
         }
-        
+
         protected virtual bool CompareConstantAndCheckForRecursion(ConstantExpression a, ConstantExpression b)
         {
             var queryableA = a.Value as IQueryable;
@@ -298,7 +367,7 @@ namespace ExpressiveExpressionTrees
             // which creates an infinite loop, so when that happens call the base compare instead
             var constA = a.Expression as ConstantExpression;
             var constB = b.Expression as ConstantExpression;
-            if ((constA != null && constA.Value == a) || 
+            if ((constA != null && constA.Value == a) ||
                 (constB != null && constB.Value == b))
             {
                 return CompareConstant(constA, constB);
@@ -397,7 +466,7 @@ namespace ExpressiveExpressionTrees
             if (a == b)
                 return true;
             if (a == null || b == null) {
-                // i dont' think it's possible to trigger this condition because the Type has to be different for one member list 
+                // i dont' think it's possible to trigger this condition because the Type has to be different for one member list
                 // to be null and the other to not be null, e.g. one anonymous type and one concrete type
                 return false;
             }
