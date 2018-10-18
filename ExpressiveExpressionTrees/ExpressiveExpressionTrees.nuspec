@@ -10,9 +10,11 @@
 <description>This is a source only distribution of the ExpressiveExpressionTrees library that can be embedded inside of other projects / libraries.</description>
 <copyright>Copyright 2016-2017</copyright>
 <version>
-2.0.1
+2.1.0
 </version>
 <releaseNotes>
+* 2.1.0 - adding support for try catch expressions
+* 2.1.0 - adding support for goto expressions
 * 2.0.1 - Update ExpressionComparer to use IDictionary&lt;,&gt; instead of Dictionary&lt;,&gt;
 * 2.0.0 - Updated nuget package to target .netstandard 2.0
 * 2.0.0 - The sources nuget packages have been removed because dotnet standard / nuget does not currently support the source transformations feature, which is necesarry for them to be implemented properly
